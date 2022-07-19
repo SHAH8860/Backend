@@ -4,8 +4,8 @@ var bodyParser = require('body-parser')
 const port = process.env.PORT||3000
 const connection=require('./connection')
 const router=require('./Routes/routes')
-app.use('/routes',router)
 app.use(bodyParser.json)
+app.use('/routes',router)
 app.get('/', (req, res) => {
   res.send('Hello World!')
 })
