@@ -5,22 +5,16 @@ var pdf=require('html-pdf')
 var path=require('path')
 var fs=require('fs')
 var connection=require('../connection')
-module.exports=router
+var ejs=require('ejs')
+
 router.post('/report',(req,res)=>{
     var prod=req.body
     var generateid=uuid.v1()
-    var productdetail=JSON.parse(prod.productdetail)
-    var query="insert into bill(name,uuid,email,contactnumber,paymentmethod,total,description,creadtedby) values(?,?,?,?,?,?,?,?)"
+    var productdetail=JSON.parse(prod.description)
+    var query="insert into bill(name,uuid,email,contactnumber,paymentmethod,total,description,createdby) values(?,?,?,?,?,?,?,?)"
     connection.query(query,[prod.name,generateid,prod.email,prod.contactnumber,prod.paymentmethod,prod.total,prod.description,res.locals.email],(err,result)=>{
         if(!err){
-            pdf.create(result).toFile('./generatepdf'+generateid+".pdf",(err,result)=>{
-                if(!err){
-                    return res.status(200).json({uuid:generateid})
-                }
-                else{
-                    return res.status(500).json(err)
-                }
-            })
+            ejs.renderFile(path.join(__dirname,'card.ejs'),{productdetail:productdetail,name:prod.name,email:prod.email,contactnimber:prod.contactnumber,paymentmethod:prod.paymentmethod,total:prod.total})
 
             
         }
@@ -50,3 +44,8 @@ router.delete('/delete/:id',(req,res)=>{
 
    
 })
+
+
+
+
+module.exports=router
