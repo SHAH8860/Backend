@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+          }
+          th, td {
+            padding: 5px;
+            text-align: left;    
+          }
+    </style>
+</head>
+<body>
+    <div class="container text-center ">
+        <h1>Tata Service</h1>
+    </div>
+    <table style="width:100%">
+        <tr>
+          <th>Name</th>
+          <th>Category</th>
+          <th>Quantity</th>
+          <th>Price</th>
+          <th>Subtotal</th>
+        </tr>
+        <% if(productdetail.length>0){ % >
+            <% productdetail.forEach(product=>{%>
+                <tr>
+                    <td><%= product.name %></td>
+                    <td><%= product.category %></td>
+                    <td><%= product.quantity %></td>
+                    <td><%= product.price %></td>
+                    <td><%= product.total %></td>
+                </tr>
+                <%});%>
+                <%}%>
+        
+      </table>
+      <h3><%= totalamount%></h3>
+      <h2>Thanku for shoping</h2>
+</body>
+</html>

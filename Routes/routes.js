@@ -30,9 +30,9 @@ router.post('/signup',(req,res)=>{
         }
     })
 })
-router.post('/login',(req,res)=>{
+router.post('/login',(req,res,next)=>{
     let user=req.body
-    query="select email,password,status,role from person where email=?"
+    let query="select email,password,status,role from person where email=?"
     connection.query(query,[user.email],(err,result)=>{
         if(!err){
             if(result.lenght<=0 ||result[0].password!=user.password){
